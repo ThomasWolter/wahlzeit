@@ -11,6 +11,7 @@ public class Location {
     /**
      *
      * @methodtype constructor
+     * I set the values to 0, as it was stated that we don't work on the logic
      */
     public Location(Coordinate coordinate) {
         this.coordinate = coordinate;
