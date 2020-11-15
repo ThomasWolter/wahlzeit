@@ -72,6 +72,7 @@ public class Coordinate {
      * Formula used: sqrt(pow(a-x) + pow(b-y) + pow(c-z))
      * @param coordinate cartesian coordinates to measure the distance from
      * @return the distance between the two coordinates
+     * @throws IllegalArgumentException If null is passed as an argument
      */
     public double getDistance(Coordinate coordinate){
         // Check if coordinate is a valid argument
@@ -89,6 +90,7 @@ public class Coordinate {
      * Determines if local coordinate is equal to the argument
      * @param  coordinate  cartesian coordinates to compare to this objects cartesian coordinates
      * @return result of evaluation
+     * @throws IllegalArgumentException If null is passed as an argument
      */
     public boolean isEqual(Coordinate coordinate){
         // Check if coordinate is a valid argument
@@ -97,5 +99,17 @@ public class Coordinate {
         }
         // Check if all coordinates are equal
         return coordinate.x == this.x && coordinate.y == this.y && coordinate.z == this.z;
+    }
+
+    /**
+     * Forward equals() to isEqual() by overriding it
+     */
+    @Override
+    public boolean equals(Object obj){
+        // Check if obj is actually a coordinate
+        if (!(obj instanceof Coordinate)){
+            return false;
+        }
+        return isEqual((Coordinate) obj);
     }
 }
