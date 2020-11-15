@@ -68,12 +68,17 @@ public class Coordinate {
     }
 
     /**
-     *
      * Determines the distance between local coordinate (x,y,z) and argument (a,b,c)
      * Formula used: sqrt(pow(a-x) + pow(b-y) + pow(c-z))
+     * @param coordinate cartesian coordinates to measure the distance from
+     * @return the distance between the two coordinates
      */
     public double getDistance(Coordinate coordinate){
-        //TODO Add test for validity
+        // Check if coordinate is a valid argument
+        if (coordinate == null) {
+            throw new IllegalArgumentException("Null is not a valid argument");
+        }
+        // Calculate the value
         double distance = Math.sqrt(Math.pow(coordinate.getX() - this.x, 2) +
                 Math.pow(coordinate.getY() - this.y, 2) +
                 Math.pow(coordinate.getZ() - this.z, 2));
@@ -82,10 +87,15 @@ public class Coordinate {
 
     /**
      * Determines if local coordinate is equal to the argument
-     *
+     * @param  coordinate  cartesian coordinates to compare to this objects cartesian coordinates
+     * @return result of evaluation
      */
     public boolean isEqual(Coordinate coordinate){
-        //TODO Add test for validity
+        // Check if coordinate is a valid argument
+        if (coordinate == null) {
+            throw new IllegalArgumentException("Null is not a valid argument");
+        }
+        // Check if all coordinates are equal
         return coordinate.x == this.x && coordinate.y == this.y && coordinate.z == this.z;
     }
 }
