@@ -74,9 +74,9 @@ public class Coordinate {
      */
     public double getDistance(Coordinate coordinate){
         //TODO Add test for validity
-        double distance = Math.sqrt(Math.pow(coordinate.getx() - this.x, 2) +
-                Math.pow(coordinate.gety() - this.y, 2) +
-                Math.pow(coordinate.getz() - this.z, 2));
+        double distance = Math.sqrt(Math.pow(coordinate.getX() - this.x, 2) +
+                Math.pow(coordinate.getY() - this.y, 2) +
+                Math.pow(coordinate.getZ() - this.z, 2));
         return distance;
     }
 
