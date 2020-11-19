@@ -80,10 +80,11 @@ public class Coordinate {
             throw new IllegalArgumentException("Null is not a valid argument");
         }
         // Calculate the value
-        double distance = Math.sqrt(Math.pow(coordinate.getX() - this.x, 2) +
-                Math.pow(coordinate.getY() - this.y, 2) +
-                Math.pow(coordinate.getZ() - this.z, 2));
-        return distance;
+        // ax = pow(a-x), by = pow(b-y), cz = pow(c-z)
+        double ax = Math.pow(coordinate.getX() - this.x, 2);
+        double by = Math.pow(coordinate.getY() - this.y, 2);
+        double cz = Math.pow(coordinate.getZ() - this.z, 2);
+        return Math.sqrt(ax + by + cz);
     }
 
     /**
@@ -98,7 +99,10 @@ public class Coordinate {
             throw new IllegalArgumentException("Null is not a valid argument");
         }
         // Check if all coordinates are equal
-        return coordinate.x == this.x && coordinate.y == this.y && coordinate.z == this.z;
+        boolean xCompare = (Math.abs(coordinate.x - this.x) <= 0.0001);
+        boolean yCompare = (Math.abs(coordinate.y - this.y) <= 0.0001);
+        boolean zCompare = (Math.abs(coordinate.z - this.z) <= 0.0001);
+        return xCompare && yCompare && zCompare;
     }
 
     /**
