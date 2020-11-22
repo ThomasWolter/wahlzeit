@@ -108,7 +108,7 @@ public class Photo extends DataObject {
 	 *
 	 * This is empty for this week, because it was stated that the logic is not our task
 	 */
-	protected Location location = new Location(new Coordinate(0., 0., 0));
+	protected Location location = new Location(0., 0., 0);
 
 	/**
 	 *
@@ -172,7 +172,7 @@ public class Photo extends DataObject {
 		maxPhotoSize = PhotoSize.getFromWidthHeight(width, height);
 
 		// Read the location data and create new location object
-		location = new Location(new Coordinate(rset.getDouble("x"), rset.getDouble("y"), rset.getDouble("z")));
+		location = new Location(rset.getDouble("x"), rset.getDouble("y"), rset.getDouble("z"));
 	}
 	
 	/**

@@ -13,16 +13,16 @@ public class Location {
      * @methodtype constructor
      * I set the values to 0, as it was stated that we don't work on the logic
      */
-    public Location(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public Location(double x, double y, double z) {
+        this.coordinate = new Coordinate(x, y, z);
     }
 
     /**
      *
      * @methodtype set
      */
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public void setCoordinate(double x, double y, double z) {
+        this.coordinate = new Coordinate(x, y, z);
     }
 
     /**

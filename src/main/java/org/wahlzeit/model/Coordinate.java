@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import java.util.Objects;
+
 /**
  * A coordinate represents the cartesian interpretation of the location
  */
@@ -115,5 +117,10 @@ public class Coordinate {
             return false;
         }
         return isEqual((Coordinate) obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, z);
     }
 }
