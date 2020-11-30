@@ -8,37 +8,23 @@ import static org.junit.Assert.assertNotNull;
 
 public class LocationTest {
 
-    private Location location;
+    private Location location, location1;
     // for init test
     private final double x = 1.,y = 2., z = 3.;
+    private final double radius = 3.7416573867739, theta = 0.64052231267943, phi = 1.107148717794;
 
     @Before
     public void initLocation() {
-        location = new Location(x,y,z);
+        location = new Location(x,y,z, "cartesian");
+        location1 = new Location(phi, theta, radius, "spheric");
     }
 
     @Test
     public void testConstructor() {
         // Check if location was initialized
         assertNotNull(location);
-
-        // Check properties after creation
-        assertEquals(x, location.getCoordinate().getX(),0.0001);
-        assertEquals(y, location.getCoordinate().getY(),0.0001);
-        assertEquals(z, location.getCoordinate().getZ(),0.0001);
+        assertNotNull(location1);
     }
-
-    /**
-     *
-     */
-    @Test
-    public void testSetNewValues() {
-        // Check if  Coordinates are set correctly
-        double a = 1., b = 2., c = 3.;
-        location.setCoordinate(a,b,c);
-        assertEquals(a, location.getCoordinate().getX(),0.0001);
-        assertEquals(b, location.getCoordinate().getY(),0.0001);
-        assertEquals(c, location.getCoordinate().getZ(),0.0001);
-    }
+    
 
 }
