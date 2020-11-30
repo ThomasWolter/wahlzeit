@@ -29,10 +29,11 @@ CREATE TABLE photos (
 	status integer,
 	praise_sum integer,
 	no_votes integer,
-	creation_time bigint
-	x double precision,
-	y double precision,
-	z double precision,
+	creation_time bigint,
+	x_phi double precision,
+	y_theta double precision,
+	z_radius double precision,
+	system text,
 	name text,
 	company text,
 	debut integer
