@@ -152,8 +152,10 @@ public class SphericCoordinate implements Coordinate{
         // Convert the spheric coordinates to cartesian coordinates
         SphericCoordinate sCoordinate = coordinate.asSphericCoordinate();
         // Calculate the value
-        // TODO
-        return 0.;
+        double deltaTheta = Math.abs(this.theta - sCoordinate.getTheta());
+        double sinPhi = Math.sin(this.phi) * Math.sin(sCoordinate.getPhi());
+        double cosPhi = Math.cos(this.phi) * Math.cos(sCoordinate.getPhi()) * deltaTheta;
+        return Math.acos(sinPhi + cosPhi);
     }
 
     @Override
