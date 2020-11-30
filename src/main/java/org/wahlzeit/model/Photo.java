@@ -108,7 +108,7 @@ public class Photo extends DataObject {
 	 *
 	 * This is empty for this week, because it was stated that the logic is not our task
 	 */
-	protected Location location = new Location(0., 0., 0);
+	protected Location location = new Location(0., 0., 0, "cartesian");
 
 	/**
 	 *
@@ -172,7 +172,7 @@ public class Photo extends DataObject {
 		maxPhotoSize = PhotoSize.getFromWidthHeight(width, height);
 
 		// Read the location data and create new location object
-		location = new Location(rset.getDouble("x"), rset.getDouble("y"), rset.getDouble("z"));
+		location = new Location(rset);
 	}
 	
 	/**
@@ -193,10 +193,8 @@ public class Photo extends DataObject {
 		rset.updateInt("praise_sum", praiseSum);
 		rset.updateInt("no_votes", noVotes);
 		rset.updateLong("creation_time", creationTime);
-		// Update the values for x, y, z
-		rset.updateDouble("x", location.getCoordinate().getX());
-		rset.updateDouble("y", location.getCoordinate().getY());
-		rset.updateDouble("z", location.getCoordinate().getZ());
+		// Update the location
+		location.getCoordinate().writeOn(rset);
 	}
 
 	/**
