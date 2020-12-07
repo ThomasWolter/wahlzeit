@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * A coordinate represents the cartesian interpretation of the location
  */
-public class CartesianCoordinate implements Coordinate{
+public class CartesianCoordinate extends AbstractCoordinate{
 
     private double x = 0.0;
     private double y = 0.0;
@@ -120,86 +120,5 @@ public class CartesianCoordinate implements Coordinate{
         return new SphericCoordinate(phi, theta, radius);
     }
 
-    /**
-     * Determines the distance between local coordinate (x,y,z) and argument (a,b,c)
-     * Formula used: sqrt(pow(a-x) + pow(b-y) + pow(c-z))
-     * @param coordinate coordinates to measure the distance from
-     * @return the distance between the two coordinates
-     * @throws IllegalArgumentException If null is passed as an argument
-     */
-    public double getCartesianDistance(Coordinate coordinate){
-        // Check if coordinate is a valid argument
-        if (coordinate == null) {
-            throw new IllegalArgumentException("Null is not a valid argument");
-        }
-        // Make sure the argument is in cartesian form
-        CartesianCoordinate sCoordinate = coordinate.asCartesianCoordinate();
-        // Calculate the value
-        // ax = pow(a-x), by = pow(b-y), cz = pow(c-z)
-        double ax = Math.pow(sCoordinate.getX() - this.x, 2);
-        double by = Math.pow(sCoordinate.getY() - this.y, 2);
-        double cz = Math.pow(sCoordinate.getZ() - this.z, 2);
-        return Math.sqrt(ax + by + cz);
-    }
-
-    /**
-     * Converts coordinates to spheric and determines the distance between local coordinate (x,y,z) and argument (a,b,c)
-     * Formula used: TODO
-     * @param coordinate coordinates to measure the central angle from
-     * @return the central angle between the two coordinates
-     * @throws IllegalArgumentException If null is passed as an argument
-     */
-    @Override
-    public double getCentralAngle(Coordinate coordinate) {
-        // Check if coordinate is a valid argument
-        if (coordinate == null) {
-            throw new IllegalArgumentException("Null is not a valid argument");
-        }
-        // Convert the spheric coordinates to cartesian coordinates
-        SphericCoordinate sCoordinate = this.asSphericCoordinate();
-        // Calculate the value
-        return sCoordinate.getCentralAngle(coordinate);
-    }
-
-    /**
-     * Determines if local coordinate is equal to the argument
-     * @param  coordinate  coordinate to compare to this objects coordinate
-     * @return result of evaluation
-     * @throws IllegalArgumentException If null is passed as an argument
-     */
-    public boolean isEqual(Coordinate coordinate){
-        // Check if coordinate is a valid argument
-        if (coordinate == null) {
-            throw new IllegalArgumentException("Null is not a valid argument for isEqual()");
-        }
-        // Make sure the argument is in cartesian form
-        CartesianCoordinate cCoordinate = coordinate.asCartesianCoordinate();
-
-        // Check if all coordinates are equal
-        boolean xCompare = (Math.abs(cCoordinate.x - this.x) <= 0.0001);
-        boolean yCompare = (Math.abs(cCoordinate.y - this.y) <= 0.0001);
-        boolean zCompare = (Math.abs(cCoordinate.z - this.z) <= 0.0001);
-        return xCompare && yCompare && zCompare;
-    }
-
-    /**
-     * Forward equals() to isEqual() by overriding it
-     */
-    @Override
-    public boolean equals(Object obj){
-        // Check if obj is actually a coordinate
-        if (!(obj instanceof Coordinate)){
-            return false;
-        }
-        return isEqual((CartesianCoordinate) obj);
-    }
-
-    /**
-     * Make sure the contract between equals() and hashCode() is kept
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.x, this.y, this.z);
-    }
 
 }

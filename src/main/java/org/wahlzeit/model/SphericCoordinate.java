@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class SphericCoordinate implements Coordinate{
+public class SphericCoordinate extends AbstractCoordinate{
 
     private double phi = 0.0;
     private double theta = 0.0;
@@ -117,80 +117,4 @@ public class SphericCoordinate implements Coordinate{
         return this;
     }
 
-    /**
-     * Converts coordinates to cartesian and determines the distance between local coordinate (x,y,z) and argument (a,b,c)
-     * Formula used: sqrt(pow(a-x) + pow(b-y) + pow(c-z))
-     * @param coordinate spheric coordinates to measure the distance from
-     * @return the distance between the two coordinates
-     * @throws IllegalArgumentException If null is passed as an argument
-     */
-    @Override
-    public double getCartesianDistance(Coordinate coordinate) {
-        // Check if coordinate is a valid argument
-        if (coordinate == null) {
-            throw new IllegalArgumentException("Null is not a valid argument");
-        }
-        // Convert the spheric coordinates to cartesian coordinates
-        CartesianCoordinate cCoordinate1 = this.asCartesianCoordinate();
-        // Call the cartesian coordinate function
-        return cCoordinate1.getCartesianDistance(coordinate);
-    }
-
-    /**
-     * Converts coordinates to spheric and determines the distance between local coordinate (x,y,z) and argument (a,b,c)
-     * Formula used: TODO
-     * @param coordinate coordinates to measure the central angle from
-     * @return the central angle between the two coordinates
-     * @throws IllegalArgumentException If null is passed as an argument
-     */
-    @Override
-    public double getCentralAngle(Coordinate coordinate) {
-        // Check if coordinate is a valid argument
-        if (coordinate == null) {
-            throw new IllegalArgumentException("Null is not a valid argument");
-        }
-        // Convert the spheric coordinates to cartesian coordinates
-        SphericCoordinate sCoordinate = coordinate.asSphericCoordinate();
-        // Calculate the value
-        double deltaTheta = Math.abs(this.theta - sCoordinate.getTheta());
-        double sinPhi = Math.sin(this.phi) * Math.sin(sCoordinate.getPhi());
-        double cosPhi = Math.cos(this.phi) * Math.cos(sCoordinate.getPhi()) * deltaTheta;
-        return Math.acos(sinPhi + cosPhi);
-    }
-
-    @Override
-    public boolean isEqual(Coordinate coordinate) {
-        // Check if coordinate is a valid argument
-        if (coordinate == null) {
-            throw new IllegalArgumentException("Null is not a valid argument for isEqual()");
-        }
-        // Make sure the argument is in spheric form
-        SphericCoordinate sCoordinate = coordinate.asSphericCoordinate();
-
-        // Check if all coordinates are equal
-        boolean xCompare = (Math.abs(sCoordinate.phi - this.phi) <= 0.0001);
-        boolean yCompare = (Math.abs(sCoordinate.theta - this.theta) <= 0.0001);
-        boolean zCompare = (Math.abs(sCoordinate.radius - this.radius) <= 0.0001);
-        return xCompare && yCompare && zCompare;
-    }
-
-    /**
-     * Forward equals() to isEqual() by overriding it
-     */
-    @Override
-    public boolean equals(Object obj){
-        // Check if obj is actually a coordinate
-        if (!(obj instanceof Coordinate)){
-            return false;
-        }
-        return isEqual((SphericCoordinate) obj);
-    }
-
-    /**
-     * Make sure the contract between equals() and hashCode() is kept
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.phi, this.theta, this.radius);
-    }
 }
