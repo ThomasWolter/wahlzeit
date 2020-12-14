@@ -13,14 +13,14 @@ public abstract class AbstractCoordinate implements Coordinate{
      * @throws IllegalArgumentException If null is passed as an argument
      */
     public double getCartesianDistance(Coordinate coordinate){
-        // Check if coordinate is a valid argument
-        if (coordinate == null) {
-            throw new IllegalArgumentException("Null is not a valid argument");
-        }
+        // Check preconditions
+        assertNull(coordinate);
+        this.assertClassInvariant();
 
         // Make sure the local and argument coordinate are in cartesian form
         CartesianCoordinate local = this.asCartesianCoordinate();
         CartesianCoordinate argument = coordinate.asCartesianCoordinate();
+
         // Calculate the value
         // ax = pow(a-x), by = pow(b-y), cz = pow(c-z)
         double ax = Math.pow(argument.getX() - local.getX(), 2);
@@ -38,10 +38,9 @@ public abstract class AbstractCoordinate implements Coordinate{
      */
     @Override
     public double getCentralAngle(Coordinate coordinate) {
-        // Check if coordinate is a valid argument
-        if (coordinate == null) {
-            throw new IllegalArgumentException("Null is not a valid argument");
-        }
+        // Check preconditions
+        assertNull(coordinate);
+        this.assertClassInvariant();
 
         // Make sure both the local and the argument are in spheric form
         SphericCoordinate local = this.asSphericCoordinate();
@@ -62,10 +61,11 @@ public abstract class AbstractCoordinate implements Coordinate{
      */
     @Override
     public boolean isEqual(Coordinate coordinate) {
+        // Check preconditions
         // Check if coordinate is a valid argument
-        if (coordinate == null) {
-            throw new IllegalArgumentException("Null is not a valid argument for isEqual()");
-        }
+        assertNull(coordinate);
+        this.assertClassInvariant();
+
         // Make sure both the local and the argument are in cartesian form
         CartesianCoordinate local = this.asCartesianCoordinate();
         CartesianCoordinate argument = coordinate.asCartesianCoordinate();
@@ -98,6 +98,29 @@ public abstract class AbstractCoordinate implements Coordinate{
         return Objects.hash(coordinate.getX(), coordinate.getY(), coordinate.getZ());
     }
 
+    /**
+     * Checks if the double value given to this function is valid
+     * @param toCheck double value to test
+     */
+    @Override
+    public void assertDouble(double toCheck){
+        if (!Double.isFinite(toCheck)) {
+            throw new IllegalArgumentException("Double value can't be infintie");
+        }
+        if (Double.isNaN(toCheck)){
+            throw new IllegalArgumentException("Double value can't be NaN");
+        }
+    }
 
+    /**
+     * Checks if the coordinate value given is null
+     * @param toCheck coordinate to test
+     */
+    @Override
+    public void assertNull(Coordinate toCheck){
+        if (toCheck == null) {
+            throw new IllegalArgumentException("Coordinate can't be null");
+        }
+    }
 
 }

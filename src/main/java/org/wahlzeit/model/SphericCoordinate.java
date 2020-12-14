@@ -2,7 +2,6 @@ package org.wahlzeit.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class SphericCoordinate extends AbstractCoordinate{
 
@@ -15,9 +14,15 @@ public class SphericCoordinate extends AbstractCoordinate{
      * @methodtype constructor
      */
     public SphericCoordinate(double phi, double theta, double radius) {
+        // preconditions
+        assertDouble(phi);
+        assertDouble(theta);
+        assertDouble(radius);
+
         this.phi = phi;
         this.theta = theta;
         this.radius = radius;
+        this.assertClassInvariant();
     }
 
     /**
@@ -28,6 +33,7 @@ public class SphericCoordinate extends AbstractCoordinate{
         this.phi = rset.getDouble("x_phi");
         this.theta = rset.getDouble("y_theta");
         this.radius = rset.getDouble("z_radius");
+        this.assertClassInvariant();
     }
 
     /**
@@ -43,6 +49,7 @@ public class SphericCoordinate extends AbstractCoordinate{
      * @methodtype set
      */
     public void setPhi(double phi) {
+        assertDouble(phi);
         this.phi = phi;
     }
 
@@ -59,6 +66,7 @@ public class SphericCoordinate extends AbstractCoordinate{
      * @methodtype set
      */
     public void setTheta(double theta) {
+        assertDouble(theta);
         this.theta = theta;
     }
 
@@ -75,6 +83,7 @@ public class SphericCoordinate extends AbstractCoordinate{
      * @methodtype set
      */
     public void setRadius(double radius) {
+        assertDouble(radius);
         this.radius = radius;
     }
 
@@ -101,12 +110,15 @@ public class SphericCoordinate extends AbstractCoordinate{
      */
     @Override
     public CartesianCoordinate asCartesianCoordinate() {
+        this.assertClassInvariant();
         // Convert spheric coordinates
         double x = this.radius * Math.sin(this.theta) * Math.cos(this.phi);
         double y = this.radius * Math.sin(this.theta) * Math.sin(this.phi);
         double z = this.radius * Math.cos(this.theta);
         // Create new object
-        return new CartesianCoordinate(x, y, z);
+        CartesianCoordinate coordinate = new CartesianCoordinate(x, y, z);
+        coordinate.assertClassInvariant();
+        return coordinate;
     }
 
     /**
@@ -114,7 +126,18 @@ public class SphericCoordinate extends AbstractCoordinate{
      */
     @Override
     public SphericCoordinate asSphericCoordinate() {
+        assertClassInvariant();
         return this;
+    }
+
+
+    /**
+     * Checks if this objects variables are valid
+     */
+    public void assertClassInvariant() {
+        assertDouble(getPhi());
+        assertDouble(getTheta());
+        assertDouble(getRadius());
     }
 
 }

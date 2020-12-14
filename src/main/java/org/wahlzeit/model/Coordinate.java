@@ -22,4 +22,10 @@ public interface Coordinate {
     public double getCentralAngle(Coordinate coordinate);
 
     public boolean isEqual(Coordinate coordinate);
-}
+
+    // Checks
+    public void assertDouble(double toCheck);
+    public void assertNull(Coordinate toCheck);
+    public void assertClassInvariant();
+
+    }

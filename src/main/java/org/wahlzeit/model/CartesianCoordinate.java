@@ -3,7 +3,6 @@ package org.wahlzeit.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Objects;
 
 /**
  * A coordinate represents the cartesian interpretation of the location
@@ -19,9 +18,14 @@ public class CartesianCoordinate extends AbstractCoordinate{
      * @methodtype constructor
      */
     public CartesianCoordinate(double x, double y, double z) {
+        // preconditions
+        assertDouble(x);
+        assertDouble(y);
+        assertDouble(z);
         this.x = x;
         this.y = y;
         this.z = z;
+        this.assertClassInvariant();
     }
 
     /**
@@ -32,6 +36,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
                 this.x = rset.getDouble("x_phi");
                 this.y = rset.getDouble("y_theta");
                 this.z = rset.getDouble("z_radius");
+                this.assertClassInvariant();
     }
 
     /**
@@ -39,6 +44,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
      * @methodtype set
      */
     public void setX(double x) {
+        assertDouble(x);
         this.x = x;
     }
 
@@ -47,6 +53,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
      * @methodtype set
      */
     public void setY(double y) {
+        assertDouble(y);
         this.y = y;
     }
 
@@ -55,6 +62,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
      * @methodtype set
      */
     public void setZ(double z) {
+        assertDouble(z);
         this.z = z;
     }
 
@@ -103,6 +111,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
      */
     @Override
     public CartesianCoordinate asCartesianCoordinate() {
+        assertClassInvariant();
         return this;
     }
 
@@ -112,13 +121,25 @@ public class CartesianCoordinate extends AbstractCoordinate{
      */
     @Override
     public SphericCoordinate asSphericCoordinate() {
+        assertClassInvariant();
         // Convert cartesian coordinates
         double radius = Math.sqrt(Math.pow(this.x, 2) +  Math.pow(this.y, 2) +  Math.pow(z, 2));
         double phi = Math.atan(this.y/this.x);
         double theta = Math.atan(Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2))/this.z);
         // Create new object
-        return new SphericCoordinate(phi, theta, radius);
+        // Create new object
+        SphericCoordinate coordinate = new SphericCoordinate(phi, theta, radius);
+        coordinate.assertClassInvariant();
+        return coordinate;
     }
 
+    /**
+     * Checks if this objects variables are valid
+     */
+    public void assertClassInvariant() {
+        assertDouble(getX());
+        assertDouble(getY());
+        assertDouble(getZ());
+    }
 
 }
