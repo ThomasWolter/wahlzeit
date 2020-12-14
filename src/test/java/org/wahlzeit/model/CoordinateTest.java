@@ -142,4 +142,38 @@ public class CoordinateTest {
         assertEquals(hash1, hash2);
     }
 
+    /**
+     * Test preconditions abstract
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testAbstractPrecondition(){
+        // pass null as an argument
+        coordinate1c.getCartesianDistance(null);
+        coordinate1s.getCentralAngle(null);
+        coordinate1c.isEqual(null);
+    }
+
+    /**
+     * Test preconditions cartesian
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testCartesianPrecondition(){
+        CartesianCoordinate coord = new CartesianCoordinate(Double.NaN,y,z);
+        coord.setX(Double.NaN);
+        coord.setY(Double.NaN);
+        coord.setZ(Double.NaN);
+    }
+
+    /**
+     * Test preconditions spheric
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testSphericPrecondition(){
+        // pass null as an argument
+        SphericCoordinate coord = new SphericCoordinate(Double.NaN,y,z);
+        coord.setPhi(Double.NaN);
+        coord.setTheta(Double.NaN);
+        coord.setRadius(Double.NaN);
+    }
+    
 }
