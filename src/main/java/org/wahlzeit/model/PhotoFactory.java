@@ -53,7 +53,9 @@ public class PhotoFactory {
 		if (instance != null) {
 			throw new IllegalStateException("attempt to initialize PhotoFactory twice");
 		}
-		
+		if (photoFactory == null) {
+			throw new IllegalArgumentException("photoFactory can not be null");
+		}
 		instance = photoFactory;
 	}
 	

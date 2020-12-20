@@ -123,6 +123,10 @@ public class Photo extends DataObject {
 	 * @methodtype constructor
 	 */
 	public Photo(PhotoId myId) {
+		// Precondition
+		if (myId == null) {
+			throw new IllegalArgumentException("myId can not be null");
+		}
 		id = myId;
 		
 		incWriteCount();
@@ -148,6 +152,10 @@ public class Photo extends DataObject {
 	 * 
 	 */
 	public void readFrom(ResultSet rset) throws SQLException {
+		// Precondition
+		if (rset == null) {
+			throw new IllegalArgumentException("rset can not be null");
+		}
 		id = PhotoId.getIdFromInt(rset.getInt("id"));
 
 		ownerId = rset.getInt("owner_id");
@@ -179,6 +187,10 @@ public class Photo extends DataObject {
 	 * 
 	 */
 	public void writeOn(ResultSet rset) throws SQLException {
+		// Precondition
+		if (rset == null) {
+			throw new IllegalArgumentException("rset can not be null");
+		}
 		rset.updateInt("id", id.asInt());
 		rset.updateInt("owner_id", ownerId);
 		rset.updateString("owner_name", ownerName);

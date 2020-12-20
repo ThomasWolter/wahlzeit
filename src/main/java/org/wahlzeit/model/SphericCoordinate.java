@@ -153,7 +153,7 @@ public class SphericCoordinate extends AbstractCoordinate{
      */
     public void assertRadius(double toCheck){
         if (toCheck < 0) {
-            throw new ArithmeticException("Radius can't be less than zero");
+            throw new IllegalArgumentException("Radius can't be less than zero");
         }
     }
 
