@@ -2,6 +2,9 @@ package org.wahlzeit.model;
 
 import org.junit.Test;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import static org.junit.Assert.assertEquals;
 
 public class CartoonCharPhotoTest {
@@ -16,4 +19,36 @@ public class CartoonCharPhotoTest {
         assertEquals(photo.getCompany(), company);
         assertEquals(photo.getDebut(), debut);
     }
+
+    /**
+     * Test null as argument
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testNullConstructor() throws SQLException {
+        // pass null as an argument
+        CartoonCharPhoto photo = new CartoonCharPhoto((PhotoId) null);
+        CartoonCharPhoto photo2 = new CartoonCharPhoto((ResultSet) null);
+
+    }
+
+    /**
+     * Test readFrom with null
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testReadFrom() throws SQLException {
+        // pass null as an argument
+        CartoonCharPhoto photo = new CartoonCharPhoto(name, company, debut);
+        photo.readFrom(null);
+    }
+
+    /**
+     * Test writeOn with null
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testWriteOn() throws SQLException {
+        // pass null as an argument
+        CartoonCharPhoto photo = new CartoonCharPhoto(name, company, debut);
+        photo.writeOn(null);
+    }
+
 }

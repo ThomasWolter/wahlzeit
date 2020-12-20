@@ -175,5 +175,15 @@ public class CoordinateTest {
         coord.setTheta(Double.NaN);
         coord.setRadius(Double.NaN);
     }
-    
+
+    /**
+     * Test negative distance
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testRadius(){
+        // pass null as an argument
+        SphericCoordinate coord = new SphericCoordinate(0,0,-2);
+        SphericCoordinate coord1 = new SphericCoordinate(0,0,2);
+        coord.setRadius(-2);
+    }
 }
