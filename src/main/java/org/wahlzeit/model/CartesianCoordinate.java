@@ -142,4 +142,5 @@ public class CartesianCoordinate extends AbstractCoordinate{
         assertDouble(getZ());
     }
 
+
 }

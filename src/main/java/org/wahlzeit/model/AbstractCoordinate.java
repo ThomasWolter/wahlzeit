@@ -26,7 +26,10 @@ public abstract class AbstractCoordinate implements Coordinate{
         double ax = Math.pow(argument.getX() - local.getX(), 2);
         double by = Math.pow(argument.getY() - local.getY(), 2);
         double cz = Math.pow(argument.getZ() - local.getZ(), 2);
-        return Math.sqrt(ax + by + cz);
+        double distance = Math.sqrt(ax + by + cz);
+        assertDistance(distance);
+
+        return distance;
     }
 
     /**
@@ -50,6 +53,9 @@ public abstract class AbstractCoordinate implements Coordinate{
         double deltaTheta = Math.abs(local.getTheta() - argument.getTheta());
         double sinPhi = Math.sin(local.getPhi()) * Math.sin(argument.getPhi());
         double cosPhi = Math.cos(local.getPhi()) * Math.cos(argument.getPhi()) * deltaTheta;
+        double angle = Math.acos(sinPhi + cosPhi);
+        assertAngle(angle);
+
         return Math.acos(sinPhi + cosPhi);
     }
 
@@ -120,6 +126,30 @@ public abstract class AbstractCoordinate implements Coordinate{
     public void assertNull(Coordinate toCheck){
         if (toCheck == null) {
             throw new IllegalArgumentException("Coordinate can't be null");
+        }
+    }
+
+    /**
+     * Checks if the angle has a valid value
+     * @param toCheck value to test
+     */
+    @Override
+    public void assertAngle(double toCheck){
+        boolean minimum = toCheck >= 0;
+        boolean maximum = toCheck <= 360;
+        if (!(minimum && maximum)) {
+            throw new ArithmeticException("Radius can't be less than zero");
+        }
+    }
+
+    /**
+     * Checks if the distance has a valid value
+     * @param toCheck value to test
+     */
+    @Override
+    public void assertDistance(double toCheck){
+        if (toCheck <= 0) {
+            throw new ArithmeticException("Distance is negative");
         }
     }
 

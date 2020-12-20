@@ -26,6 +26,10 @@ public interface Coordinate {
     // Checks
     public void assertDouble(double toCheck);
     public void assertNull(Coordinate toCheck);
-    public void assertClassInvariant();
+    public void assertAngle(double toCheck);
+    public void assertDistance(double toCheck);
+
+
+        public void assertClassInvariant();
 
     }

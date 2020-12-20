@@ -18,7 +18,8 @@ public class SphericCoordinate extends AbstractCoordinate{
         assertDouble(phi);
         assertDouble(theta);
         assertDouble(radius);
-
+        assertRadius(radius);
+        // set values
         this.phi = phi;
         this.theta = theta;
         this.radius = radius;
@@ -32,7 +33,9 @@ public class SphericCoordinate extends AbstractCoordinate{
     public SphericCoordinate(ResultSet rset) throws SQLException {
         this.phi = rset.getDouble("x_phi");
         this.theta = rset.getDouble("y_theta");
-        this.radius = rset.getDouble("z_radius");
+        double radius_tmp = rset.getDouble("z_radius");
+        assertRadius(radius_tmp);
+        this.radius = radius_tmp;
         this.assertClassInvariant();
     }
 
@@ -84,6 +87,7 @@ public class SphericCoordinate extends AbstractCoordinate{
      */
     public void setRadius(double radius) {
         assertDouble(radius);
+        assertRadius(radius);
         this.radius = radius;
     }
 
@@ -131,6 +135,8 @@ public class SphericCoordinate extends AbstractCoordinate{
     }
 
 
+    // Functions for assetion purposes
+
     /**
      * Checks if this objects variables are valid
      */
@@ -138,6 +144,17 @@ public class SphericCoordinate extends AbstractCoordinate{
         assertDouble(getPhi());
         assertDouble(getTheta());
         assertDouble(getRadius());
+        assertRadius(getRadius());
+    }
+
+    /**
+     * Checks if the radius has a valid value
+     * @param toCheck value to test
+     */
+    public void assertRadius(double toCheck){
+        if (toCheck < 0) {
+            throw new ArithmeticException("Radius can't be less than zero");
+        }
     }
 
 }
