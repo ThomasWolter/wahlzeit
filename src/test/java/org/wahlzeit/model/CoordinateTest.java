@@ -14,22 +14,22 @@ public class CoordinateTest {
     // Coordinate for init and set test
     private CartesianCoordinate coordinate;
     // Coordinates for getDistanceTest (cartesian)
-    private CartesianCoordinate coordinate1c = new CartesianCoordinate(x,y,z);
-    private CartesianCoordinate coordinate2c = new CartesianCoordinate(a,b,c);
+    private CartesianCoordinate coordinate1c = CartesianCoordinate.getCartesianCoordinate(x,y,z);
+    private CartesianCoordinate coordinate2c = CartesianCoordinate.getCartesianCoordinate(a,b,c);
     // Coordinates for isEqualTest
-    private CartesianCoordinate coordinate3c = new CartesianCoordinate(a,b,c);
+    private CartesianCoordinate coordinate3c = CartesianCoordinate.getCartesianCoordinate(a,b,c);
     // Coordinates for getDistanceTest (spheric)
-    private SphericCoordinate coordinate1s = new SphericCoordinate(phi,theta,radius);
-    private Coordinate coordinate2s = new SphericCoordinate(phi1,theta1,radius1);
+    private SphericCoordinate coordinate1s = SphericCoordinate.getSphericCoordinate(phi,theta,radius);
+    private Coordinate coordinate2s = SphericCoordinate.getSphericCoordinate(phi1,theta1,radius1);
     // Coordinates for isEqualTest
-    private Coordinate coordinate3s = new SphericCoordinate(a,b,c);
+    private Coordinate coordinate3s = SphericCoordinate.getSphericCoordinate(a,b,c);
 
     @Before
     public void initLocation() {
         // base coordinate
-        coordinate = new CartesianCoordinate(x,y,z);
-        coordinate1c  = new CartesianCoordinate(x,y,z);
-        coordinate1s = new SphericCoordinate(phi,theta,radius);
+        coordinate = CartesianCoordinate.getCartesianCoordinate(x,y,z);
+        coordinate1c  = CartesianCoordinate.getCartesianCoordinate(x,y,z);
+        coordinate1s = SphericCoordinate.getSphericCoordinate(phi,theta,radius);
     }
 
     /**
@@ -43,19 +43,6 @@ public class CoordinateTest {
         assertNotNull(coordinate1s);
     }
 
-    /**
-     *
-     */
-    @Test
-    public void testSetNewValues() {
-        // Check if x,y,z values are set correctly
-        coordinate.setX(x);
-        assertEquals(x, coordinate.getX(),0.0001);
-        coordinate.setY(y);
-        assertEquals(y, coordinate.getY(),0.0001);
-        coordinate.setZ(z);
-        assertEquals(z, coordinate.getZ(),0.0001);
-    }
 
 
     /**
@@ -153,37 +140,5 @@ public class CoordinateTest {
         coordinate1c.isEqual(null);
     }
 
-    /**
-     * Test preconditions cartesian
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void testCartesianPrecondition(){
-        CartesianCoordinate coord = new CartesianCoordinate(Double.NaN,y,z);
-        coord.setX(Double.NaN);
-        coord.setY(Double.NaN);
-        coord.setZ(Double.NaN);
-    }
 
-    /**
-     * Test preconditions spheric
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void testSphericPrecondition(){
-        // pass null as an argument
-        SphericCoordinate coord = new SphericCoordinate(Double.NaN,y,z);
-        coord.setPhi(Double.NaN);
-        coord.setTheta(Double.NaN);
-        coord.setRadius(Double.NaN);
-    }
-
-    /**
-     * Test negative distance
-     */
-    @Test(expected = IllegalArgumentException.class)
-    public void testRadius(){
-        // pass null as an argument
-        SphericCoordinate coord = new SphericCoordinate(0,0,-2);
-        SphericCoordinate coord1 = new SphericCoordinate(0,0,2);
-        coord.setRadius(-2);
-    }
 }

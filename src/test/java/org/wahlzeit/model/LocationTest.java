@@ -25,6 +25,6 @@ public class LocationTest {
         assertNotNull(location);
         assertNotNull(location1);
     }
-    
+
 
 }
