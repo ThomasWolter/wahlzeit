@@ -1,9 +1,10 @@
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public abstract class AbstractCoordinate implements Coordinate{
-
 
     /**
      * Determines the distance between local coordinate (x,y,z) and argument (a,b,c)
@@ -71,7 +72,6 @@ public abstract class AbstractCoordinate implements Coordinate{
         // Check if coordinate is a valid argument
         assertNull(coordinate);
         this.assertClassInvariant();
-
         // Make sure both the local and the argument are in cartesian form
         CartesianCoordinate local = this.asCartesianCoordinate();
         CartesianCoordinate argument = coordinate.asCartesianCoordinate();
@@ -80,7 +80,9 @@ public abstract class AbstractCoordinate implements Coordinate{
         boolean xCompare = (Math.abs(local.getX() - argument.getX()) <= 0.0001);
         boolean yCompare = (Math.abs(local.getY() - argument.getY()) <= 0.0001);
         boolean zCompare = (Math.abs(local.getZ() - argument.getZ()) <= 0.0001);
+
         return xCompare && yCompare && zCompare;
+
     }
 
     /**

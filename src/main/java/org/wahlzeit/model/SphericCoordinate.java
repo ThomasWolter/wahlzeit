@@ -2,8 +2,13 @@ package org.wahlzeit.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SphericCoordinate extends AbstractCoordinate{
+
+    // HashMap to cache all initiated coordinates
+    private static final Map<Integer, SphericCoordinate> sphericCache = new HashMap();
 
     private double phi = 0.0;
     private double theta = 0.0;
@@ -13,7 +18,7 @@ public class SphericCoordinate extends AbstractCoordinate{
      *
      * @methodtype constructor
      */
-    public SphericCoordinate(double phi, double theta, double radius) {
+    private SphericCoordinate(double phi, double theta, double radius) {
         // preconditions
         assertDouble(phi);
         assertDouble(theta);
@@ -30,14 +35,29 @@ public class SphericCoordinate extends AbstractCoordinate{
      *
      * @methodtype constructor
      */
-    public SphericCoordinate(ResultSet rset) throws SQLException {
-        this.phi = rset.getDouble("x_phi");
-        this.theta = rset.getDouble("y_theta");
-        double radius_tmp = rset.getDouble("z_radius");
-        assertRadius(radius_tmp);
-        this.radius = radius_tmp;
-        this.assertClassInvariant();
+    public static SphericCoordinate getSphericCoordinateRset(ResultSet rset) throws SQLException {
+        double phi_db = rset.getDouble("x_phi");
+        double theta_db = rset.getDouble("y_theta");
+        double radius_db = rset.getDouble("z_radius");
+        return getSphericCoordinate(phi_db, theta_db, radius_db);
     }
+
+    public static SphericCoordinate getSphericCoordinate(double phi, double theta, double radius) {
+        // Create a new cartesian coordinate and handle caching
+        SphericCoordinate sphericCoordinate = new SphericCoordinate(phi,theta,radius);
+        int hashCoordinate = sphericCoordinate.hashCode();
+        SphericCoordinate result = sphericCache.get(hashCoordinate);
+        if (result == null) {
+            synchronized (sphericCache){
+                sphericCache.put(hashCoordinate, sphericCoordinate);
+                result = sphericCache.get(hashCoordinate);
+            }
+        }
+        return result;
+    }
+
+
+
 
     /**
      *
@@ -47,14 +67,6 @@ public class SphericCoordinate extends AbstractCoordinate{
         return phi;
     }
 
-    /**
-     *
-     * @methodtype set
-     */
-    public void setPhi(double phi) {
-        assertDouble(phi);
-        this.phi = phi;
-    }
 
     /**
      *
@@ -64,14 +76,6 @@ public class SphericCoordinate extends AbstractCoordinate{
         return theta;
     }
 
-    /**
-     *
-     * @methodtype set
-     */
-    public void setTheta(double theta) {
-        assertDouble(theta);
-        this.theta = theta;
-    }
 
     /**
      *
@@ -81,15 +85,7 @@ public class SphericCoordinate extends AbstractCoordinate{
         return radius;
     }
 
-    /**
-     *
-     * @methodtype set
-     */
-    public void setRadius(double radius) {
-        assertDouble(radius);
-        assertRadius(radius);
-        this.radius = radius;
-    }
+
 
     /**
      *
@@ -120,7 +116,7 @@ public class SphericCoordinate extends AbstractCoordinate{
         double y = this.radius * Math.sin(this.theta) * Math.sin(this.phi);
         double z = this.radius * Math.cos(this.theta);
         // Create new object
-        CartesianCoordinate coordinate = new CartesianCoordinate(x, y, z);
+        CartesianCoordinate coordinate = CartesianCoordinate.getCartesianCoordinate(x, y, z);
         coordinate.assertClassInvariant();
         return coordinate;
     }

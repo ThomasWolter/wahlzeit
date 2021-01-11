@@ -3,68 +3,64 @@ package org.wahlzeit.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A coordinate represents the cartesian interpretation of the location
  */
 public class CartesianCoordinate extends AbstractCoordinate{
 
-    private double x = 0.0;
-    private double y = 0.0;
-    private double z = 0.0;
+    // HashMap to cache all initiated coordinates
+    private static final Map<Integer, CartesianCoordinate> cartesianCache = new HashMap();
+
+    private final double x;
+    private final double y;
+    private final double z;
+
 
     /**
      *
      * @methodtype constructor
+     * Add new entry to chache HashMap
      */
-    public CartesianCoordinate(double x, double y, double z) {
+    private CartesianCoordinate(double x, double y, double z) {
         // preconditions
         assertDouble(x);
         assertDouble(y);
         assertDouble(z);
+        // set values
         this.x = x;
         this.y = y;
         this.z = z;
-        this.assertClassInvariant();
     }
+
+    public static CartesianCoordinate getCartesianCoordinate(double x, double y, double z) {
+        // Create a new cartesian coordinate and handle caching
+        CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(x,y,z);
+        int hashCoordinate = cartesianCoordinate.hashCode();
+        CartesianCoordinate result = cartesianCache.get(hashCoordinate);
+        if (result == null) {
+            synchronized (cartesianCache){
+                cartesianCache.put(hashCoordinate, cartesianCoordinate);
+                result = cartesianCache.get(hashCoordinate);
+            }
+        }
+        return result;
+    }
+
 
     /**
      *
      * @methodtype constructor
      */
-    public CartesianCoordinate(ResultSet rset) throws SQLException {
-                this.x = rset.getDouble("x_phi");
-                this.y = rset.getDouble("y_theta");
-                this.z = rset.getDouble("z_radius");
-                this.assertClassInvariant();
+    public static CartesianCoordinate getCartesianCoordinateRset(ResultSet rset) throws SQLException {
+                double x_db = rset.getDouble("x_phi");
+                double y_db = rset.getDouble("y_theta");
+                double z_db = rset.getDouble("z_radius");
+                return getCartesianCoordinate(x_db, y_db, z_db);
     }
 
-    /**
-     *
-     * @methodtype set
-     */
-    public void setX(double x) {
-        assertDouble(x);
-        this.x = x;
-    }
-
-    /**
-     *
-     * @methodtype set
-     */
-    public void setY(double y) {
-        assertDouble(y);
-        this.y = y;
-    }
-
-    /**
-     *
-     * @methodtype set
-     */
-    public void setZ(double z) {
-        assertDouble(z);
-        this.z = z;
-    }
 
     /**
      *
@@ -90,6 +86,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
         return z;
     }
 
+    
     /**
      *
      * @methodtype get
@@ -128,7 +125,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
         double theta = Math.atan(Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2))/this.z);
         // Create new object
         // Create new object
-        SphericCoordinate coordinate = new SphericCoordinate(phi, theta, radius);
+        SphericCoordinate coordinate = SphericCoordinate.getSphericCoordinate(phi, theta, radius);
         coordinate.assertClassInvariant();
         return coordinate;
     }

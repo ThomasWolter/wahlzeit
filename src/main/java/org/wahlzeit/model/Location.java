@@ -18,18 +18,18 @@ public class Location {
      */
     public Location(double x, double y, double z, String system) {
         if (system.equals("cartesian")){
-            this.coordinate = new CartesianCoordinate(x, y, z);
+            this.coordinate = CartesianCoordinate.getCartesianCoordinate(x, y, z);
         } else {
-            this.coordinate = new SphericCoordinate(x, y, z);
+            this.coordinate = SphericCoordinate.getSphericCoordinate(x, y, z);
         }
     }
 
     public Location(ResultSet rset) throws SQLException {
         String system = rset.getString("system");
         if (system.equals("cartesian")){
-            this.coordinate = new CartesianCoordinate(rset);
+            this.coordinate = CartesianCoordinate.getCartesianCoordinateRset(rset);
         } else {
-            this.coordinate = new SphericCoordinate(rset);
+            this.coordinate = SphericCoordinate.getSphericCoordinateRset(rset);
         }
     }
 
@@ -39,9 +39,9 @@ public class Location {
      */
     public void setCoordinate(double x, double y, double z, String system) {
         if (system.equals("cartesian")){
-            this.coordinate = new CartesianCoordinate(x, y, z);
+            this.coordinate = CartesianCoordinate.getCartesianCoordinate(x, y, z);
         } else {
-            this.coordinate = new SphericCoordinate(x, y, z);
+            this.coordinate = SphericCoordinate.getSphericCoordinate(x, y, z);
         }
     }
 
