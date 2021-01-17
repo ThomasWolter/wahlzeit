@@ -26,6 +26,14 @@ import java.sql.*;
 import org.wahlzeit.services.*;
 import org.wahlzeit.services.mailing.*;
 
+
+
+@PatternInstance(
+		patternName = "Abstract Factory",
+		participants = {
+			"AbstractFactory", "ConcreteFactory"
+		}
+)
 /**
  * The UserManager provides access to and manages Users (including Moderators and Administrators).
  */
@@ -130,7 +138,9 @@ public class UserManager extends ObjectManager {
 	protected User doGetUserByTag(String tag) {
 		return users.get(tag);
 	}
-	
+
+
+
 	/**
 	 * 
 	 * @methodtype factory

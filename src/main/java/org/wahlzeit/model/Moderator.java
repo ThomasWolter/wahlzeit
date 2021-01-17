@@ -22,6 +22,14 @@ package org.wahlzeit.model;
 
 import org.wahlzeit.services.*;
 
+
+@PatternInstance(
+		patternName = "Abstract Factory",
+		participants = {
+		"Concreteproduct"
+		}
+)
+
 /**
  * A Moderator is a system user with moderator privileges.
  */

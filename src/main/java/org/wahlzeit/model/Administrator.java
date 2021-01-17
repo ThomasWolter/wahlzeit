@@ -22,6 +22,12 @@ package org.wahlzeit.model;
 
 import org.wahlzeit.services.EmailAddress;
 
+@PatternInstance(
+		patternName = "Abstract Factory",
+		participants = {
+		"Concreteproduct"
+		}
+)
 
 /**
  * An Administrator is a moderator with administration privileges.

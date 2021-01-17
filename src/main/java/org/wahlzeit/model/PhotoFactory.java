@@ -24,11 +24,21 @@ import java.sql.*;
 
 import org.wahlzeit.services.*;
 
+
+
+
 /**
  * An Abstract Factory for creating photos and related objects.
  */
 public class PhotoFactory {
-	
+
+
+	// Pattern marker for cw09
+	@PatternInstance(
+			patternName = "Singleton",
+			participants = {}
+	)
+
 	/**
 	 * Hidden singleton instance; needs to be initialized from the outside.
 	 */
@@ -65,7 +75,8 @@ public class PhotoFactory {
 	public static void initialize() {
 		getInstance(); // drops result due to getInstance() side-effects
 	}
-	
+
+
 	/**
 	 * 
 	 */

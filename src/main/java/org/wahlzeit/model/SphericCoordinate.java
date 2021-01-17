@@ -5,6 +5,13 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+
+// Pattern marker for cw09
+@PatternInstance(
+        patternName = "Value Object",
+        participants = {}
+)
+
 public class SphericCoordinate extends AbstractCoordinate{
 
     // HashMap to cache all initiated coordinates

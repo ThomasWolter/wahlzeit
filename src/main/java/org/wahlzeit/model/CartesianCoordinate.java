@@ -11,6 +11,13 @@ import java.util.Map;
  */
 public class CartesianCoordinate extends AbstractCoordinate{
 
+
+    // Pattern marker for cw09
+    @PatternInstance(
+            patternName = "Value Object",
+            participants = {}
+    )
+
     // HashMap to cache all initiated coordinates
     private static final Map<Integer, CartesianCoordinate> cartesianCache = new HashMap();
 
