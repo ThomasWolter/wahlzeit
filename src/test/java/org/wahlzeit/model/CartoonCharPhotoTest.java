@@ -9,15 +9,15 @@ import static org.junit.Assert.assertEquals;
 
 public class CartoonCharPhotoTest {
 
-    private final String name = "Donald Duck", company = "Disney";
+    private final String name = "Donald Duck", artstyle = "classic";
     private final int debut = 1934;
 
     @Test
     public void testConstructor() {
-        CartoonCharPhoto photo = new CartoonCharPhoto(name, company, debut);
-        assertEquals(photo.getName(),name);
-        assertEquals(photo.getCompany(), company);
-        assertEquals(photo.getDebut(), debut);
+        CartoonCharPhoto photo = new CartoonCharPhoto(name, debut, artstyle);
+        assertEquals(photo.getCartoonChar().getCartoonCharType().getName(), name);
+        assertEquals(photo.getCartoonChar().getCartoonCharType().getDebut(), debut);
+        assertEquals(photo.getCartoonChar().getArtstyle(), artstyle);
     }
 
     /**
@@ -37,7 +37,7 @@ public class CartoonCharPhotoTest {
     @Test(expected = IllegalArgumentException.class)
     public void testReadFrom() throws SQLException {
         // pass null as an argument
-        CartoonCharPhoto photo = new CartoonCharPhoto(name, company, debut);
+        CartoonCharPhoto photo = new CartoonCharPhoto(name, debut, artstyle);
         photo.readFrom(null);
     }
 
@@ -47,7 +47,7 @@ public class CartoonCharPhotoTest {
     @Test(expected = IllegalArgumentException.class)
     public void testWriteOn() throws SQLException {
         // pass null as an argument
-        CartoonCharPhoto photo = new CartoonCharPhoto(name, company, debut);
+        CartoonCharPhoto photo = new CartoonCharPhoto(name, debut, artstyle);
         photo.writeOn(null);
     }
 

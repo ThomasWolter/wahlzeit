@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 public class CartoonCharPhotoFactoryTest {
 
-    private final String name = "Donald Duck", company = "Disney";
+    private final String name = "Donald Duck", artstyle = "classic";
     private final int debut = 1934;
 
     private CartoonCharPhotoFactory factory= new CartoonCharPhotoFactory ();
@@ -16,11 +16,11 @@ public class CartoonCharPhotoFactoryTest {
     @Test
     public void testConstructor() {
 
-        CartoonCharPhoto photo = factory.createPhoto(name, company, debut);
+        CartoonCharPhoto photo = factory.createPhoto(name, debut, artstyle);
 
-        assertEquals(photo.getName(),name);
-        assertEquals(photo.getCompany(), company);
-        assertEquals(photo.getDebut(), debut);
+        assertEquals(photo.getCartoonChar().getCartoonCharType().getName(), name);
+        assertEquals(photo.getCartoonChar().getCartoonCharType().getDebut(), debut);
+        assertEquals(photo.getCartoonChar().getArtstyle(), artstyle);
 
     }
 
