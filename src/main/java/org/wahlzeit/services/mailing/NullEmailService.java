@@ -20,6 +20,7 @@
 
 package org.wahlzeit.services.mailing;
 
+import org.wahlzeit.model.PatternInstance;
 import org.wahlzeit.services.EmailAddress;
 import org.wahlzeit.services.SysLog;
 
@@ -28,6 +29,12 @@ import org.wahlzeit.services.SysLog;
  * @author dirk
  *
  */
+// Pattern marker for cw09
+@PatternInstance(
+		patternName = "Null Object",
+		participants = {}
+)
+
 public class NullEmailService implements EmailService {
 
 	@Override

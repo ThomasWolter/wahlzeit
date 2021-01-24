@@ -5,9 +5,7 @@ import java.sql.SQLException;
 
 public class CartoonCharPhoto extends Photo{
 
-    private String name = "";
-    private String company = "";
-    private int debut = 0;
+    private CartoonChar cartoonChar;
 
     public CartoonCharPhoto(){
         super();
@@ -21,51 +19,35 @@ public class CartoonCharPhoto extends Photo{
         readFrom(rSet);
     }
 
-    public CartoonCharPhoto(String name, String company, int debut){
+    public CartoonChar getCartoonChar() {
+        return cartoonChar;
+    }
+
+    public void setCartoonChar(CartoonChar cartoonChar) {
+        this.cartoonChar = cartoonChar;
+    }
+
+    public CartoonCharPhoto(CartoonCharType cartoonCharType, String artstyle){
         super();
-        this.name = name;
-        this.company = company;
-        this.debut = debut;
+        this.cartoonChar = new CartoonChar(cartoonCharType, artstyle);
     }
 
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public int getDebut() {
-        return debut;
-    }
-
-    public void setDebut(int debut) {
-        this.debut = debut;
+    public CartoonCharPhoto(String name, int debut, String artstyle){
+        super();
+        this.cartoonChar = CartoonCharManager.getInstance().createCartoonChar(name, debut, artstyle);
     }
 
     @Override
     public void readFrom(ResultSet rset) throws SQLException {
         super.readFrom(rset);
-        name = rset.getString("name");
-        company = rset.getString("company");
-        debut = rset.getInt("debut");
+        this.cartoonChar = CartoonCharManager.getInstance().createCartoonChar(rset);
     }
 
     @Override
     public void writeOn(ResultSet rset) throws SQLException {
         super.writeOn(rset);
-        rset.updateString("name", this.name);
-        rset.updateString("company", this.company);
-        rset.updateInt("debut", this.debut);
+        rset.updateString("name", cartoonChar.getCartoonCharType().getName());
+        rset.updateInt("debut", cartoonChar.getCartoonCharType().getDebut());
+        rset.updateString("artstyle", cartoonChar.getArtstyle());
     }
 }

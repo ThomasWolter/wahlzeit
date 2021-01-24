@@ -23,6 +23,7 @@ package org.wahlzeit.services;
 import java.util.*;
 import javax.mail.internet.*;
 
+import org.wahlzeit.model.PatternInstance;
 import org.wahlzeit.utils.*;
 
 /**
@@ -30,7 +31,12 @@ import org.wahlzeit.utils.*;
  * It is a value object and implemented as immutable.
  */
 public class EmailAddress {
-	
+
+	// Pattern marker for cw09
+	@PatternInstance(
+			patternName = "Value Object",
+			participants = {}
+	)
 	/**
 	 * 
 	 */

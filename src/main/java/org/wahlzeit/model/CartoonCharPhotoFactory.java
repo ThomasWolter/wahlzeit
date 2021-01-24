@@ -20,8 +20,8 @@ public class CartoonCharPhotoFactory extends PhotoFactory{
         return new CartoonCharPhoto(rSet);
     }
 
-    public CartoonCharPhoto createPhoto(String name, String company, int debut) {
-        return new CartoonCharPhoto(name, company, debut);
+    public CartoonCharPhoto createPhoto(String name, int debut, String artstyle) {
+        return new CartoonCharPhoto(name, debut, artstyle);
     }
 
 }

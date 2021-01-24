@@ -35,8 +35,8 @@ CREATE TABLE photos (
 	z_radius double precision,
 	system text,
 	name text,
-	company text,
-	debut integer
+	debut integer,
+	artstyle text
 );
 
 CREATE TABLE tags (
