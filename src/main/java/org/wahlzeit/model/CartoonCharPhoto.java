@@ -3,6 +3,17 @@ package org.wahlzeit.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/*
+ * Object creation:
+ * 1.) Start in PhotoManager.createPhoto()
+ *     -> Call to PhotoUtil.createPhoto()
+ * 2.) Generate new ID
+ * 3.) Call to  PhotoFactory.createPhoto(id)
+ * 4.) Return new photo object PhotoUtil.createPhoto() by using the Photo constructor
+ * 5.) Handle the width and height of the new image and return to PhotoManager.createPhoto()
+ * 6.) Call PhotoManager.addPhoto() to handle the caching
+ */
+
 public class CartoonCharPhoto extends Photo{
 
     private CartoonChar cartoonChar;
