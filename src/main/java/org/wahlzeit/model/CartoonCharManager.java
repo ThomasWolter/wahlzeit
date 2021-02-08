@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+ * CW12: See pdf
+ */
+
 public class CartoonCharManager extends ObjectManager {
 
     // Singleton

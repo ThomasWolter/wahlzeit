@@ -3,7 +3,9 @@ package org.wahlzeit.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
+/*
+ * CW12: See pdf
+ */
 
 
 /*

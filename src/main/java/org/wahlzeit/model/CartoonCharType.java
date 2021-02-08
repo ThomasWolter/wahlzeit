@@ -4,6 +4,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+/*
+ * CW12: See pdf
+ */
+
 public class CartoonCharType {
 
     // Attributes
